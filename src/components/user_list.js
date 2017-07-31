@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 class UserList extends Component {
+
+  componentWillMount(){
+    this.props.fetchUsers();
+  }
+
   renderUser(user){
     return (
       <div className="card card-block">
@@ -14,15 +20,15 @@ class UserList extends Component {
 
   render(){
     return (
-      <div>
-        {this.props.users.map(user => renderUser(user))}
+      <div className="user-list">
+        {this.props.users.map(user=>this.renderUser(user))}
       </div>
     );
   }
 }
 
 function mapStateToProps(state){
-  return { users: users };
+  return { users: state.users };
 }
 
-export default connect(mapStateToProps)(UserList);
+export default connect(mapStateToProps, actions)(UserList);
